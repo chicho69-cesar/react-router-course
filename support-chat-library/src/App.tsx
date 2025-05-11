@@ -1,15 +1,9 @@
-import { Button } from "./components/ui/button"
+import AuthLayout from "./auth/layout/AuthLayout"
 
 function App() {
   return (
     <>
-      <h1 className='text-3xl font-bold underline'>
-        Hello world!
-      </h1>
-
-      <Button variant='ghost'>
-        Click me!
-      </Button>
+      <AuthLayout />
     </>
   )
 }
