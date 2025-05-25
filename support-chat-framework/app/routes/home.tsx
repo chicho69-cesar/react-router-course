@@ -1,3 +1,4 @@
+import { Navigate, redirect } from 'react-router';
 import type { Route } from './+types/home';
 
 export function meta({}: Route.MetaArgs) {
@@ -7,14 +8,20 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
+export async function loader() {
+  return redirect('/chat');
+}
+
 export default function Home() {
-  return (
-    <div>
-      <h1 className="text-4xl font-thin">Bienvenido a React Router!</h1>
+  return <Navigate to="/chat" />
+  
+  // return (
+  //   <div>
+  //     <h1 className="text-4xl font-thin">Bienvenido a React Router!</h1>
       
-      <p className="text-lg">
-        Este es un proyecto de React Router creado con el comando de Vite.
-      </p>
-    </div>
-  );
+  //     <p className="text-lg">
+  //       Este es un proyecto de React Router creado con el comando de Vite.
+  //     </p>
+  //   </div>
+  // );
 }
