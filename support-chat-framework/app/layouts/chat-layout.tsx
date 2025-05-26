@@ -4,12 +4,14 @@ import { Form, Link, Outlet, redirect } from 'react-router';
 import { ContactInformationCard } from '~/chat/components/contact-information-card/ContactInformationCard';
 import { ContactList } from '~/chat/components/ContactList';
 import { Button } from '~/components/ui/button';
-import { getClients } from '~/fake/fake-data';
+import { getClient, getClients } from '~/fake/fake-data';
 import type { Route } from './+types/chat-layout';
 import { getSession } from '~/sessions.server';
 
-export async function loader({ request }: Route.LoaderArgs) {
+export async function loader({ request, params }: Route.LoaderArgs) {
   const session = await getSession(request.headers.get('Cookie'));
+  const { id } = params;
+
   const userName = session.get('name') || '';
 
   if (!session.has('userId')) {
@@ -17,12 +19,17 @@ export async function loader({ request }: Route.LoaderArgs) {
   }
 
   const clients = await getClients();
+
+  if (id) {
+    const client = await getClient(id);
+    return { clients, userName, client };
+  }
   
   return { clients, userName };
 }
 
 const ChatLayout = ({ loaderData }: Route.ComponentProps) => {
-  const { clients, userName } = loaderData;
+  const { clients, userName, client } = loaderData;
 
   return (
     <div className="flex h-screen bg-background">

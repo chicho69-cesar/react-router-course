@@ -7,10 +7,14 @@ import { NoContactSelected } from './NoContactSelected';
 
 export const ContactInformationCard = () => {
   const { id } = useParams();
-  const { clients = [] } = useLoaderData();
+  const { clients = [], client } = useLoaderData();
   const { state } = useNavigation();
 
   const isPending = state === 'loading';
+
+  if (client) {
+    return <ContactInformation client={client} />;
+  }
 
   if (isPending) {
     return <ContactInformationSkeleton />;
@@ -19,8 +23,6 @@ export const ContactInformationCard = () => {
   if (!id) {
     return <NoContactSelected />;
   }
-
-  const client = clients.find((c: Client) => c.id === id);
 
   if (!client) {
     return <NoContactSelected />;
