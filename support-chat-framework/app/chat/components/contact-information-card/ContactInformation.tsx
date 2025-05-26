@@ -1,6 +1,11 @@
+import type { Client } from '~/chat/interfaces/chat.interface';
 import { Button } from '~/components/ui/button';
 
-export const ContactInformation = () => {
+interface Props {
+  client: Client;
+}
+
+export const ContactInformation = ({ client }: Props) => {
   return (
     <div className="p-4">
       <div className="flex flex-col items-center pb-6 border-b">
@@ -8,8 +13,13 @@ export const ContactInformation = () => {
           G5
         </div>
         
-        <h3 className="font-semibold text-lg">G5 Customer</h3>
-        <p className="text-sm text-muted-foreground">Premium Account</p>
+        <h3 className="font-semibold text-lg">
+          {client.name}
+        </h3>
+
+        <p className="text-sm text-muted-foreground">
+          {client.currentPlan}
+        </p>
         
         <div className="flex items-center mt-1">
           <div className="h-2 w-2 rounded-full bg-green-500 mr-1"></div>
@@ -24,17 +34,17 @@ export const ContactInformation = () => {
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Email:</span>
-              <span>customer@g5.com</span>
+              <span>{client.email}</span>
             </div>
 
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Phone:</span>
-              <span>(555) 123-4567</span>
+              <span>{client.phone}</span>
             </div>
 
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Customer ID:</span>
-              <span>G5-12345</span>
+              <span>{client.id}</span>
             </div>
           </div>
         </div>
@@ -45,12 +55,12 @@ export const ContactInformation = () => {
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Plan:</span>
-              <span>Premium</span>
+              <span>{client.currentPlan}</span>
             </div>
 
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Member since:</span>
-              <span>Jan 2023</span>
+              <span>{client.memberSince.toLocaleDateString()}</span>
             </div>
 
             <div className="flex justify-between text-sm">
